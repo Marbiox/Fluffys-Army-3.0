@@ -39,8 +39,7 @@ public class Player : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     SpriteRenderer _spriteRenderer;
 
-    void Start()
-    {
+    void Start() {
         //gets components
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -61,8 +60,7 @@ public class Player : MonoBehaviour
         groundCheckLength = halfColliderHeight / transform.localScale.y + .04f;
     }
 
-    void Update()
-    {
+    void Update() {
         //gets player input
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -94,23 +92,26 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         MoveCharacter();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Saw" || collision.gameObject.tag == "Enemy")
-        {
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Saw") {
+            AudioManager.Play(AudioClipName.Died, AudioTypes.SoundEffect);
+            EventInvokerUtils.Invoke(EventName.gameOver);
+            Destroy(gameObject);
+        }
+    }
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Enemy") {
             AudioManager.Play(AudioClipName.Died, AudioTypes.SoundEffect);
             EventInvokerUtils.Invoke(EventName.gameOver);
             Destroy(gameObject);
         }
     }
 
-    void MoveCharacter()
-    {
+    void MoveCharacter() {
         //horizontal movement
         _rigidbody2D.velocity = new Vector2(horizontal * speed,_rigidbody2D.velocity.y);
 
@@ -136,8 +137,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void IsGroundedCheck()
-    {
+    void IsGroundedCheck() {
         if (groundCheck.collider != null)
         {
             isGrounded = true;
@@ -150,8 +150,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Clamp()
-    {
+    void Clamp() {
         if (transform.position.x - halfColliderWidth < ScreenUtils.ScreenLeft)
         {
             transform.position = new Vector2(ScreenUtils.ScreenLeft + halfColliderWidth, transform.position.y);
@@ -162,8 +161,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Flip()
-    {
+    void Flip() {
         if (facingRight)
         {
             _spriteRenderer.flipX = true;

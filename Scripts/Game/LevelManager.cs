@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         levelTimer = gameObject.AddComponent<Timer>();
-        levelTimer.Duration = 15;
+        levelTimer.Duration = 30;
         levelTimer.Run();
     }
 

@@ -31,6 +31,8 @@ public static class EventManager
             EventTypes.Add(EventName.updateHealthBar, EventType.Int);
             EventTypes.Add(EventName.updateTimeLeft, EventType.Int);
             EventTypes.Add(EventName.bossSpawned, EventType.Empty);
+            EventTypes.Add(EventName.gemCollected, EventType.Empty);
+            EventTypes.Add(EventName.gemComboEnded, EventType.Empty);
 
             foreach (EventName name in Enum.GetValues(typeof(EventName)))
             {

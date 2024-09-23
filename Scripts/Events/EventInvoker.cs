@@ -18,6 +18,8 @@ public class EventInvoker : MonoBehaviour
     UnityEvent<int> updateHealthBarEvent = new UnityEvent<int>();
     UnityEvent<int> updateTimeLeftEvent = new UnityEvent<int>();
     UnityEvent bossSpawnedEvent = new UnityEvent();
+    UnityEvent gemCollectedEvent = new UnityEvent();
+    UnityEvent gemComboEndedEvent = new UnityEvent();
 
     void Awake()
     {
@@ -38,6 +40,10 @@ public class EventInvoker : MonoBehaviour
         EventManager.AddInvoker(EventName.updateTimeLeft, this);
         emptyUnityEvents.Add(EventName.bossSpawned, bossSpawnedEvent);
         EventManager.AddInvoker(EventName.bossSpawned, this);
+        emptyUnityEvents.Add(EventName.gemCollected, gemCollectedEvent);
+        EventManager.AddInvoker(EventName.gemCollected, this);
+        emptyUnityEvents.Add(EventName.gemComboEnded, gemComboEndedEvent);
+        EventManager.AddInvoker(EventName.gemComboEnded, this);
     }
    
     //listener overloads to add listener to event

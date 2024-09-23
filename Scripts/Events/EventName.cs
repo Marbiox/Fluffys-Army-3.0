@@ -11,5 +11,7 @@ public enum EventName
     addScore,
     bossSpawned,
     updateHealthBar,
-    updateTimeLeft
+    updateTimeLeft, 
+    gemCollected,
+    gemComboEnded
 }

@@ -23,8 +23,7 @@ public class BirdBoss : MonoBehaviour
 
     Timer timeLeft;
 
-    void Start()
-    {
+    void Start() {
         health = ConfigurationUtils.BossHealth;
 
         _animator = GetComponent<Animator>();
@@ -43,15 +42,12 @@ public class BirdBoss : MonoBehaviour
         transform.position = new Vector2(0, fallHeight);
     }
 
-    void Update()
-    {
+    void Update() {
         EventInvokerUtils.Invoke(EventName.updateTimeLeft, (int)(timeLeft.TotalSeconds - timeLeft.ElapsedSeconds + .8f));
-        if (timeLeft.Finished)
-        {
+        if (timeLeft.Finished) {
             Destroy(gameObject);
         }
-        if (idleTimer.Finished && idle)
-        {
+        if (idleTimer.Finished && idle) {
             idle = false;
             falling = true;
             transform.position = new Vector2(Random.Range(edgeLeft + .5f, edgeRight - .5f), fallHeight);
@@ -61,23 +57,23 @@ public class BirdBoss : MonoBehaviour
         _animator.SetBool("Falling", falling);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Bullet") {
+            health--;
+            EventInvokerUtils.Invoke(EventName.updateHealthBar, health);
+        }
+        if (health == 0) {
+            EventInvokerUtils.Invoke(EventName.addScore, 3000);
+            Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Ground")
         {
             falling = false;
             idle = true;
             idleTimer.Run();
-        }
-        if (collision.gameObject.tag == "Bullet")
-        {
-            health--;
-            EventInvokerUtils.Invoke(EventName.updateHealthBar, health);
-        }
-        if (health == 0)
-        {
-            EventInvokerUtils.Invoke(EventName.addScore, 3000);
-            Destroy(gameObject);
         }
     }
 }

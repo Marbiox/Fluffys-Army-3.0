@@ -85,13 +85,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        /*if (collision.gameObject.tag == "Bullet" && invinsibilityTimer.Finished)
+        /*if (other.gameObject.tag == "Bullet" && invinsibilityTimer.Finished)
         {
             health -= 1;
         }*/
-        if (collision.gameObject.tag == "Bullet")
+        if (other.gameObject.tag == "Bullet")
         {
             health -= 1;
         }
